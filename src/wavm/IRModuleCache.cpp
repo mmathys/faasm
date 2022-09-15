@@ -113,6 +113,7 @@ Runtime::ModuleRef IRModuleCache::getCompiledMainModule(const std::string& user,
     const std::string key = getModuleKey(user, func, "");
 
     if (getCompiledModuleCount(key) == 0) {
+        SPDLOG_DEBUG("not using cache for main module.");
         faabric::util::FullLock registryLock(mx);
         if (compiledModuleMap.count(key) == 0) {
             IR::Module& module = getModuleFromMap(key);
@@ -123,9 +124,11 @@ Runtime::ModuleRef IRModuleCache::getCompiledMainModule(const std::string& user,
               functionLoader.loadFunctionObjectFile(msg);
 
             if (!objectFileBytes.empty()) {
+                SPDLOG_DEBUG("object file is empty, load precompiled module, size: {}", objectFileBytes.size());
                 compiledModuleMap[key] =
                   Runtime::loadPrecompiledModule(module, objectFileBytes);
             } else {
+                SPDLOG_DEBUG("object file is not empty, compile module.");
                 compiledModuleMap[key] = Runtime::compileModule(module);
             }
         }
@@ -187,6 +190,8 @@ IR::Module& IRModuleCache::getMainModule(const std::string& user,
               functionLoader.loadFunctionWasm(msg);
 
             IR::Module& module = getModuleFromMap(key);
+
+            SPDLOG_DEBUG("Loaded bytes, size: {}", wasmBytes.size());
 
             if (faabric::util::isWasm(wasmBytes)) {
                 WASM::LoadError loadError;

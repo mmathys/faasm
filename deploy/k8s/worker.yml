@@ -41,7 +41,7 @@ spec:
             - name: REDIS_QUEUE_HOST
               value: "redis-queue"
             - name: LOG_LEVEL
-              value: "info"
+              value: "debug"
             - name: CAPTURE_STDOUT
               value: "on"
             - name: CGROUP_MODE

@@ -629,6 +629,9 @@ Runtime::Instance* WAVMWasmModule::createModuleInstance(
                  boundFunction,
                  sharedModulePath);
 
+    
+    // debug information about compiled Module
+
     Runtime::Instance* instance =
       instantiateModule(compartment,
                         compiledModule,

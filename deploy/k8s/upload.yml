@@ -21,7 +21,7 @@ spec:
         - name: REDIS_QUEUE_HOST
           value: "redis-queue"
         - name: LOG_LEVEL
-          value: "info"
+          value: "debug"
         - name: LD_LIBRARY_PATH
           value: "/build/faasm/third-party/lib:/usr/local/lib"
         - name: PYTHON_CODEGEN
